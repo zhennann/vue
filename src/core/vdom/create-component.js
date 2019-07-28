@@ -113,6 +113,10 @@ export function createComponent (
 
   // plain options object: turn it into a constructor
   if (isObject(Ctor)) {
+    // by zhennann
+    if (Ctor.install) {
+      Ctor = baseCtor.util.mergeOptions(Ctor, Ctor.install(baseCtor));
+    }
     Ctor = baseCtor.extend(Ctor)
   }
 
