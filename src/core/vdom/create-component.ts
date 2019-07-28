@@ -113,7 +113,23 @@ export function createComponent(
 
   // plain options object: turn it into a constructor
   if (isObject(Ctor)) {
-    Ctor = baseCtor.extend(Ctor as typeof Component)
+    // by zhennann
+    let Ctor2 = Ctor as any;
+    const baseCtor2 = baseCtor as any;
+    const context2 = context as any;
+    if (Ctor2.installFactory) {
+      Ctor2 = baseCtor2.prototype.$meta.util.createComponentOptions(Ctor2);
+      if (!Ctor2.installFactory) {
+        context2.$options.components[tag as string] = Ctor2;
+      }
+    } else if (Ctor2.install) {
+      Ctor2 = baseCtor2.prototype.$meta.util.createComponentOptions(Ctor2);
+      if (!Ctor2.install) {
+        context2.$options.components[tag as string] = Ctor2;
+      }
+    }
+
+    Ctor = baseCtor.extend(Ctor2 as typeof Component);
   }
 
   // if at this stage it's not a constructor or an async component factory,
