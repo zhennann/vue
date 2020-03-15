@@ -7944,15 +7944,10 @@ function createComponent (
   if (isObject(Ctor)) {
     // by zhennann
     if (Ctor.install) {
-      Ctor = baseCtor.util.mergeOptions(Ctor, Ctor.install(baseCtor));
-      Ctor._Ctor = {};
-      delete Ctor.install;
-      var _Ctor = baseCtor.extend(Ctor);
+      Ctor = baseCtor.prototype.$meta.util.createComponentOptions(Ctor);
       context.$options.components[tag] = Ctor;
-      Ctor = _Ctor;
-    } else {
-      Ctor = baseCtor.extend(Ctor);
     }
+    Ctor = baseCtor.extend(Ctor);
   }
 
   // if at this stage it's not a constructor or an async component factory,
