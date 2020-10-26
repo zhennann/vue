@@ -114,7 +114,7 @@ export function createComponent (
   // plain options object: turn it into a constructor
   if (isObject(Ctor)) {
     // by zhennann
-    if (Ctor.install) {
+    if (Ctor.installFactory) {
       Ctor = baseCtor.prototype.$meta.util.createComponentOptions(Ctor);
       context.$options.components[tag] = Ctor;
     }
