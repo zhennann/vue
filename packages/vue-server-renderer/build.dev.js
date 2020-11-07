@@ -7945,8 +7945,16 @@ function createComponent (
     // by zhennann
     if (Ctor.installFactory) {
       Ctor = baseCtor.prototype.$meta.util.createComponentOptions(Ctor);
-      context.$options.components[tag] = Ctor;
+      if (!Ctor.installFactory) {
+        context.$options.components[tag] = Ctor;
+      }
+    } else if (Ctor.install) {
+      Ctor = baseCtor.prototype.$meta.util.createComponentOptions(Ctor);
+      if (!Ctor.install) {
+        context.$options.components[tag] = Ctor;
+      }
     }
+
     Ctor = baseCtor.extend(Ctor);
   }
 
