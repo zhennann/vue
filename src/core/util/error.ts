@@ -40,6 +40,15 @@ export function invokeWithErrorHandling(
 ) {
   let res
   try {
+    const __debugger = (window as any).__debugger
+    const __Vue = (window as any).Vue
+    if (
+      __debugger &&
+      __Vue.prototype.$meta.config.env === 'development' &&
+      info === 'v-on handler'
+    ) {
+      debugger
+    }
     res = args ? handler.apply(context, args) : handler.call(context)
     if (res && !res._isVue && isPromise(res) && !(res as any)._handled) {
       res.catch(e => handleError(e, vm, info + ` (Promise/async)`))
